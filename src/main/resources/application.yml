@@ -1,0 +1,13 @@
+# ===================================================================
+# springboot配置
+# ===================================================================
+spring:
+  application:
+    name: @project.name@
+  profiles:
+    active: local
+
+server:
+  port: 21001
+  servlet:
+    context-path: /

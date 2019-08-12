@@ -1,0 +1,111 @@
+# ===================================================================
+# springboot配置
+# ===================================================================
+
+# MYBATIS-PLUS
+mybatis-plus:
+    mapper-locations: classpath:mapper/*Mapper.xml
+    type-aliases-package: net.dragonshard.sample.model.entity
+    type-enums-package: net.dragonshard.sample.enums
+    configuration:
+        cache-enabled: false
+    global-config:
+        super-mapper-class: com.baomidou.mybatisplus.core.mapper.BaseMapper
+        banner: false
+
+spring:
+    redis:
+        host: 192.168.1.1
+        password: pwd
+        port: 6413
+        database: 4
+    data:
+        redis:
+            repositories:
+                enabled: false
+
+# ===================================================================
+# dragonshard配置
+# ===================================================================
+
+dragonshard:
+
+    web-core:
+        jackson:
+            allow-unquoted-control-chars: true
+            time-format-serializer: HH:mm:ss.SSS
+            date-format-serializer: yyyy-MM-dd
+            date-time-format-serializer: yyyy-MM-dd HH:mm:ss.SSS
+        version:
+            enabled: true
+
+    dynamic-datasource:
+        primary: master
+        strict: false
+        p6spy: true
+        datasource:
+            master:
+                driver-class-name: com.mysql.jdbc.Driver
+                url: jdbc:mysql://localhost:3306/dragonshard_sample_master?allowMultiQueries=true&useSSL=false
+                username: root
+                password: b123456
+            custom_1:
+                driver-class-name: com.mysql.jdbc.Driver
+                url: jdbc:mysql://localhost:3306/dragonshard_sample_custom_1?allowMultiQueries=true&useSSL=false
+                username: root
+                password: b123456
+            custom_2:
+                #                type: com.alibaba.druid.pool.DruidDataSource
+                driver-class-name: com.mysql.jdbc.Driver
+                url: jdbc:mysql://localhost:3306/dragonshard_sample_custom_2?allowMultiQueries=true&useSSL=false
+                username: root
+                password: b123456
+
+    redis:
+        # 如果没有可用的redis环境，这里要关掉
+        enabled: false
+        biz-prefix: dsf
+
+    secret:
+        enabled: true
+        aes:
+            enabled: true
+            key: nLa7BnN8W0ORlQI501GLAw==
+        rsa:
+            enabled: true
+            public-key: 10001
+            private-key: 1649ac2c27bd8171ad10f8ec070a304dc9de3bb2d9b39616ce9fe83d0d89307a757f30e4713a7a9cf6d402e256e99fa401b39ea335a707d42dc868cb78bfbd064697af6aa0b39b6fb7afa92f9ab7ce197a35f8f6b6d2b78b571e0609924cdd933433fdc2d244ee74686cebfc1736fb17d04a44d79a7b9f480938363b4657087f
+            modulus: 8f8ebda0a1f0524da6090c88af8171e2fea5666cbc3e018b6f324324991d21af4b4a8e1633e0d072299d3d42d9798878c4cf4fa6004cb1172f04a1a47297c4bee90e35e62962fdf516497d9ae2c939eb8a6dfd79261acd53edc2b38ad19279b09829c3778b5486920d854833ef3c22ec873aa025113e9825ef76a3ef67707321
+
+    limit:
+        type: local
+        aop:
+            scan-packages: net.dragonshard.sample.controller
+            exception-ignore: false
+        prefix: limit
+
+    id-generator:
+        local:
+            data-center: 2
+            machine: 2
+        redis:
+            # 如果没有可用的redis环境，这里要关掉
+            enabled: false
+            prefix: idg
+
+
+
+
+# ===================================================================
+# 个性化配置
+# ===================================================================
+
+
+
+
+
+
+
+
+
+
