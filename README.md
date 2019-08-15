@@ -8,6 +8,7 @@
     <img src="http://img.shields.io/:license-apache-brightgreen.svg" >
     <img src="https://img.shields.io/badge/JDK-1.8%2B-yellow" >
     <img src="https://img.shields.io/badge/SpringBoot-2.1.3-blue" >
+    <img src="https://www.travis-ci.org/mayee/dragonshard-sample.svg?branch=master" >
 </p>
 
 
