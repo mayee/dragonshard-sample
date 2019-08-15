@@ -169,6 +169,7 @@ public class RoleTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Test
     public void test07GetNoData() throws Exception {
+        // 此方法可能受限流功能影响导致失败 ( 抛出 RequestReachMaxLimitException 异常 )
         mockMvc.perform(
             get("/v1/api/role/8848")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))

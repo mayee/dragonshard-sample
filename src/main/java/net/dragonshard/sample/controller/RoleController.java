@@ -82,6 +82,7 @@ public class RoleController extends MyBatisController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
     })
+    // 当使用本地限流时，limitPeriod 必须设置为1
     @Limit(name = "limitLocalName", key = "limitLocalKey", limitPeriod = 1, limitCount = 1)
     @GetMapping("/{id}")
     public ResponseEntity<Result<RoleDTO>> get(@PathVariable("id") Long id) {

@@ -18,7 +18,7 @@ spring:
         host: 192.168.1.1
         password: pwd
         port: 6413
-        database: 4
+        database: 0
     data:
         redis:
             repositories:
@@ -78,6 +78,7 @@ dragonshard:
             modulus: 8f8ebda0a1f0524da6090c88af8171e2fea5666cbc3e018b6f324324991d21af4b4a8e1633e0d072299d3d42d9798878c4cf4fa6004cb1172f04a1a47297c4bee90e35e62962fdf516497d9ae2c939eb8a6dfd79261acd53edc2b38ad19279b09829c3778b5486920d854833ef3c22ec873aa025113e9825ef76a3ef67707321
 
     limit:
+        enabled: true
         type: local
         aop:
             scan-packages: net.dragonshard.sample.controller
@@ -86,12 +87,15 @@ dragonshard:
 
     id-generator:
         local:
+            enabled: true
             data-center: 2
             machine: 2
         redis:
             # 如果没有可用的redis环境，这里要关掉
             enabled: false
             prefix: idg
+        zookeeper:
+            enabled: false
 
 
 
