@@ -5,6 +5,7 @@
 
 
 <p>
+    <img src="https://tokei.rs/b1/github/mayee/dragonshard-sample?category=lines" >
     <img src="http://img.shields.io/:license-apache-brightgreen.svg" >
     <img src="https://img.shields.io/badge/JDK-1.8%2B-yellow" >
     <img src="https://img.shields.io/badge/SpringBoot-2.1.3-blue" >
@@ -28,6 +29,13 @@ Dragonshard's full-featured sample project.
 ```xml
 <version>${same-to-dragonshard}</version>
 ```
+
+## Change log
+#### v1.0.1 - 2019/08/17
+-  Added id-generator-starter test case.
+-  Added javascript rsa encryption example and source code
+
+
 
 ## License
 
