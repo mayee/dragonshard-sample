@@ -94,6 +94,7 @@ dragonshard:
             # 如果没有可用的redis环境，这里要关掉
             enabled: false
             prefix: idg
+            length: 8
         zookeeper:
             enabled: false
 

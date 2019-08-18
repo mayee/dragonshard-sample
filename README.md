@@ -24,11 +24,6 @@ Dragonshard's full-featured sample project.
 -   [Quick Start](https://dragonshard.net/doc/best)
 -   [Official Site](https://dragonshard.net)
 
-## Latest version
-
-```xml
-<version>${same-to-dragonshard}</version>
-```
 
 ## Change log
 #### v1.0.1 - 2019/08/17
