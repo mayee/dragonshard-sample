@@ -26,6 +26,8 @@ Dragonshard's full-featured sample project.
 
 
 ## Change log
+#### v1.0.2 - 2019/08/27
+-  Added RSA test case.
 #### v1.0.1 - 2019/08/17
 -  Added id-generator-starter test case.
 -  Added javascript rsa encryption example and source code

@@ -12,7 +12,7 @@
 
     <groupId>net.dragonshard</groupId>
     <artifactId>dragonshard-sample</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>dragonshard-sample</name>

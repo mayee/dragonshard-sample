@@ -73,7 +73,15 @@ public class RoleController extends MyBatisController {
     @SecretBody(value = "aes", ciphertextType = "base64")
     @ApiOperation("创建角色")
     @PostMapping
-    public ResponseEntity insert(@RequestBody @Validated(RoleBO.Create.class) RoleBO roleBO) throws Exception {
+    public ResponseEntity insert(@RequestBody @Validated(RoleBO.Create.class) RoleBO roleBO) {
+        roleService.save(roleBO.convert(Role.class));
+        return success(HttpStatus.CREATED);
+    }
+
+    @SecretBody(value = "rsa", ciphertextType = "hex")
+    @ApiOperation("创建角色RSA")
+    @PostMapping("/rsa")
+    public ResponseEntity insertByRSA(@RequestBody @Validated(RoleBO.Create.class) RoleBO roleBO) {
         roleService.save(roleBO.convert(Role.class));
         return success(HttpStatus.CREATED);
     }
