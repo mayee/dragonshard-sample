@@ -12,6 +12,7 @@
  */
 package net.dragonshard.sample.service.impl;
 
+import java.io.Serializable;
 import lombok.extern.slf4j.Slf4j;
 import net.dragonshard.dsf.core.toolkit.EncryptUtils;
 import net.dragonshard.dsf.data.mybatis.framework.service.impl.DsfServiceImpl;
@@ -25,8 +26,6 @@ import net.dragonshard.sample.service.IUserService;
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-
 /**
  * <p>
  * IUserService 服务实现类
@@ -38,35 +37,35 @@ import java.io.Serializable;
 @Service
 public class UserServiceImpl extends DsfServiceImpl<UserMapper, User> implements IUserService {
 
-    @Override
-    public void updateStatus(Long id, StatusEnum status) {
-        User user = getById(id);
-        ApiAssert.notNull(BizErrorCodeEnum.DATA_NOT_FOUND, user);
-        user = new User();
-        user.setId(id);
-        user.setStatus(status);
-        updateById(user);
-    }
+  @Override
+  public void updateStatus(Long id, StatusEnum status) {
+    User user = getById(id);
+    ApiAssert.notNull(BizErrorCodeEnum.DATA_NOT_FOUND, user);
+    user = new User();
+    user.setId(id);
+    user.setStatus(status);
+    updateById(user);
+  }
 
-    @Override
-    public void saveUser(User user) {
-        //设置默认密码，算法SHA-256，最终16进制结果拼接为：密文+盐
-        byte[] salt = EncryptUtils.generateSalt(16);
-        byte[] pwd = EncryptUtils.sha256(user.getLoginName().getBytes(), salt);
-        user.setPassword(Hex.encodeHexString(pwd) + Hex.encodeHexString(salt));
-        //默认禁用
-        user.setStatus(StatusEnum.DISABLE);
-        save(user);
-    }
+  @Override
+  public void saveUser(User user) {
+    //设置默认密码，算法SHA-256，最终16进制结果拼接为：密文+盐
+    byte[] salt = EncryptUtils.generateSalt(16);
+    byte[] pwd = EncryptUtils.sha256(user.getLoginName().getBytes(), salt);
+    user.setPassword(Hex.encodeHexString(pwd) + Hex.encodeHexString(salt));
+    //默认禁用
+    user.setStatus(StatusEnum.DISABLE);
+    save(user);
+  }
 
-    @DsfAssignDataSource("custom_2")
-    @Override
-    public User getById(Serializable id){
-        // 从 custom_2 中读取数据
-        User userCustom2 = getBaseMapper().selectById(id);
-        log.info("userCustom2 > {}", userCustom2);
+  @DsfAssignDataSource("custom_2")
+  @Override
+  public User getById(Serializable id) {
+    // 从 custom_2 中读取数据
+    User userCustom2 = getBaseMapper().selectById(id);
+    log.info("userCustom2 > {}", userCustom2);
 
-        return userCustom2;
-    }
+    return userCustom2;
+  }
 
 }

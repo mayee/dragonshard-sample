@@ -25,25 +25,25 @@ import net.dragonshard.dsf.web.core.enums.IEnum;
  */
 public enum StatusEnum implements IEnum {
 
-    /**
-     * 正常
-     */
-    NORMAL(1),
-    /**
-     * 不可用
-     */
-    DISABLE(0);
+  /**
+   * 正常
+   */
+  NORMAL(1),
+  /**
+   * 不可用
+   */
+  DISABLE(0);
 
-    @EnumValue
-    private final int value;
+  @EnumValue
+  private final int value;
 
-    StatusEnum(final int value) {
-        this.value = value;
-    }
+  StatusEnum(final int value) {
+    this.value = value;
+  }
 
-    @Override
-    @JsonValue
-    public int getValue() {
-        return this.value;
-    }
+  @Override
+  @JsonValue
+  public int getValue() {
+    return this.value;
+  }
 }

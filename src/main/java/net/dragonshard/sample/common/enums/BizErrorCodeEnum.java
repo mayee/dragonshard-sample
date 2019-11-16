@@ -21,90 +21,87 @@
 package net.dragonshard.sample.common.enums;
 
 
+import javax.servlet.http.HttpServletResponse;
 import net.dragonshard.dsf.core.exception.UnknownEnumException;
 import net.dragonshard.dsf.web.core.framework.model.BizErrorCode;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 业务异常枚举
  *
  * @author mayee
- * @date 2019-06-06
- *
  * @version v1.0
+ * @date 2019-06-06
  **/
 public enum BizErrorCodeEnum {
 
-    //----------------------------------------------------业务异常----------------------------------------------------
-    /**
-     * 用户名密码错误
-     */
-    USERNAME_OR_PASSWORD_IS_WRONG(HttpServletResponse.SC_BAD_REQUEST, true, "用户名密码错误"),
-    /**
-     * 用户被禁用
-     */
-    USER_IS_DISABLED(HttpServletResponse.SC_NOT_ACCEPTABLE, true, "用户被禁用"),
-    /**
-     * 数据不存在
-     */
-    DATA_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, true, "数据不存在"),
-    /**
-     * 用户名已存在
-     */
-    USERNAME_ALREADY_EXISTS(HttpServletResponse.SC_BAD_REQUEST, true, "用户名已存在"),
+  //----------------------------------------------------业务异常----------------------------------------------------
+  /**
+   * 用户名密码错误
+   */
+  USERNAME_OR_PASSWORD_IS_WRONG(HttpServletResponse.SC_BAD_REQUEST, true, "用户名密码错误"),
+  /**
+   * 用户被禁用
+   */
+  USER_IS_DISABLED(HttpServletResponse.SC_NOT_ACCEPTABLE, true, "用户被禁用"),
+  /**
+   * 数据不存在
+   */
+  DATA_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, true, "数据不存在"),
+  /**
+   * 用户名已存在
+   */
+  USERNAME_ALREADY_EXISTS(HttpServletResponse.SC_BAD_REQUEST, true, "用户名已存在"),
+  UPLOAD_TOKEN_VALID_FAIL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "签名验证失败"),
+  UPLOAD_TOKEN_TIMEOUT(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "签名超时"),
 
-    ;
+  ;
 
-    private final int httpCode;
-    private final boolean show;
-    private final String msg;
+  private final int httpCode;
+  private final boolean show;
+  private final String msg;
 
-    BizErrorCodeEnum(int httpCode, boolean show, String msg) {
-        this.httpCode = httpCode;
-        this.msg = msg;
-        this.show = show;
+  BizErrorCodeEnum(int httpCode, boolean show, String msg) {
+    this.httpCode = httpCode;
+    this.msg = msg;
+    this.show = show;
+  }
+
+  /**
+   * 转换为ErrorCode(自定义返回消息)
+   */
+  public BizErrorCode convert(String msg) {
+    return BizErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg).build();
+  }
+
+  /**
+   * 转换为ErrorCode
+   */
+  public BizErrorCode convert() {
+    return BizErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg())
+      .build();
+  }
+
+  public static BizErrorCodeEnum getErrorCode(String errorCode) {
+    BizErrorCodeEnum[] enums = BizErrorCodeEnum.values();
+    for (BizErrorCodeEnum errorCodeEnum : enums) {
+      if (errorCodeEnum.name().equalsIgnoreCase(errorCode)) {
+        return errorCodeEnum;
+      }
     }
+    throw new UnknownEnumException(
+      "Error: Unknown errorCode, or do not support changing errorCode!\n");
+  }
 
-    /**
-     * 转换为ErrorCode(自定义返回消息)
-     *
-     * @param msg
-     * @return
-     */
-    public BizErrorCode convert(String msg) {
-        return BizErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg).build();
-    }
+  public int httpCode() {
+    return this.httpCode;
+  }
 
-    /**
-     * 转换为ErrorCode
-     *
-     * @return
-     */
-    public BizErrorCode convert() {
-        return BizErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg()).build();
-    }
+  public String msg() {
+    return this.msg;
+  }
 
-    public static BizErrorCodeEnum getErrorCode(String errorCode) {
-        BizErrorCodeEnum[] enums = BizErrorCodeEnum.values();
-        for (BizErrorCodeEnum errorCodeEnum : enums) {
-            if (errorCodeEnum.name().equalsIgnoreCase(errorCode)) {
-                return errorCodeEnum;
-            }
-        }
-        throw new UnknownEnumException("Error: Unknown errorCode, or do not support changing errorCode!\n");
-    }
-
-    public int httpCode() {
-        return this.httpCode;
-    }
-
-    public String msg() {
-        return this.msg;
-    }
-
-    public boolean show() {
-        return this.show;
-    }
+  public boolean show() {
+    return this.show;
+  }
 
 }

@@ -14,14 +14,13 @@ package net.dragonshard.sample.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.dragonshard.dsf.web.core.framework.converter.Convert;
 import net.dragonshard.sample.enums.StatusEnum;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * <p>
@@ -36,29 +35,29 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class UserDTO extends Convert {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(notes = "主键")
-    private Long id;
+  @ApiModelProperty(notes = "主键")
+  private Long id;
 
-    @ApiModelProperty(notes = "登陆名")
-    private String loginName;
+  @ApiModelProperty(notes = "登陆名")
+  private String loginName;
 
-    @ApiModelProperty(notes = "昵称")
-    private String nickname;
+  @ApiModelProperty(notes = "昵称")
+  private String nickname;
 
-    @ApiModelProperty(notes = "邮箱")
-    private String email;
+  @ApiModelProperty(notes = "邮箱")
+  private String email;
 
-    @ApiModelProperty(notes = "状态:0：禁用 1：正常")
-    private StatusEnum status;
+  @ApiModelProperty(notes = "状态:0：禁用 1：正常")
+  private StatusEnum status;
 
-    @ApiModelProperty(notes = "创建时间")
-    private LocalDateTime createTime;
+  @ApiModelProperty(notes = "创建时间")
+  private LocalDateTime createTime;
 
-    @ApiModelProperty(notes = "修改时间")
-    private LocalDateTime modifiedTime;
+  @ApiModelProperty(notes = "修改时间")
+  private LocalDateTime modifiedTime;
 
-    @ApiModelProperty(notes = "用户角色ID")
-    private List<Long> roleIds;
+  @ApiModelProperty(notes = "用户角色ID")
+  private List<Long> roleIds;
 }

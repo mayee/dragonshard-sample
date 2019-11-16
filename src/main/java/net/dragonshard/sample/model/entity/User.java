@@ -16,13 +16,12 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.dragonshard.dsf.web.core.framework.model.BaseModel;
 import net.dragonshard.sample.enums.StatusEnum;
-
-import java.time.LocalDateTime;
 
 
 /**
@@ -38,29 +37,29 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 public class User extends BaseModel {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(notes = "登陆名")
-    private String loginName;
+  @ApiModelProperty(notes = "登陆名")
+  private String loginName;
 
-    @ApiModelProperty(notes = "密码")
-    private String password;
+  @ApiModelProperty(notes = "密码")
+  private String password;
 
-    @ApiModelProperty(notes = "用户名")
-    private String nickname;
+  @ApiModelProperty(notes = "用户名")
+  private String nickname;
 
-    @ApiModelProperty(notes = "邮箱")
-    private String email;
+  @ApiModelProperty(notes = "邮箱")
+  private String email;
 
-    @ApiModelProperty(notes = "状态 0：禁用 1：正常")
-    private StatusEnum status;
+  @ApiModelProperty(notes = "状态 0：禁用 1：正常")
+  private StatusEnum status;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    @ApiModelProperty(notes = "创建时间")
-    private LocalDateTime createTime;
+  @TableField(value = "create_time", fill = FieldFill.INSERT)
+  @ApiModelProperty(notes = "创建时间")
+  private LocalDateTime createTime;
 
-    @TableField(value = "modified_time", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(notes = "修改时间")
-    private LocalDateTime modifiedTime;
+  @TableField(value = "modified_time", fill = FieldFill.INSERT_UPDATE)
+  @ApiModelProperty(notes = "修改时间")
+  private LocalDateTime modifiedTime;
 
 }

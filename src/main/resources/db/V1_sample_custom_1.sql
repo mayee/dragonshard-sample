@@ -11,7 +11,7 @@ CREATE TABLE `sys_user`
 (
   `id`            bigint UNSIGNED UNIQUE NOT NULL,
   `login_name`    varchar(16)            NOT NULL COMMENT '登陆名',
-  `password`      varchar(256)            NOT NULL COMMENT '密码',
+  `password`      varchar(256)           NOT NULL COMMENT '密码',
   `nickname`      varchar(50)            NOT NULL COMMENT '用户名',
   `email`         varchar(100) DEFAULT NULL COMMENT '邮箱',
   `status`        smallint(2)  DEFAULT 0 NOT NULL COMMENT '状态 0：禁用 1：正常',
@@ -25,15 +25,21 @@ CREATE TABLE `sys_user`
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-delete from sys_user where id > 0;
+delete
+from sys_user
+where id > 0;
 INSERT INTO `sys_user`
-VALUES ('1', 'user_custom_1-1', 'password', 'Custom_1-1', 'user_custom_1-1@dragonshard.net', '1', '2018-11-05 17:19:05',
+VALUES ('1', 'user_custom_1-1', 'password', 'Custom_1-1', 'user_custom_1-1@dragonshard.net', '1',
+        '2018-11-05 17:19:05',
         '2018-12-13 15:04:04'),
-       ('2', 'user_custom_1-2', 'password', 'Custom_1-2', 'user_custom_1-2@dragonshard.net', '1', '2018-11-05 17:19:06',
+       ('2', 'user_custom_1-2', 'password', 'Custom_1-2', 'user_custom_1-2@dragonshard.net', '1',
+        '2018-11-05 17:19:06',
         '2018-12-13 15:04:05'),
-       ('3', 'user_custom_1-3', 'password', 'Custom_1-3', 'user_custom_1-3@dragonshard.net', '1', '2018-11-05 17:19:07',
+       ('3', 'user_custom_1-3', 'password', 'Custom_1-3', 'user_custom_1-3@dragonshard.net', '1',
+        '2018-11-05 17:19:07',
         '2018-12-13 15:04:06'),
-       ('4', 'user_custom_1-4', 'password', 'Custom_1-4', 'user_custom_1-4@dragonshard.net', '1', '2018-11-05 17:19:08',
+       ('4', 'user_custom_1-4', 'password', 'Custom_1-4', 'user_custom_1-4@dragonshard.net', '1',
+        '2018-11-05 17:19:08',
         '2018-12-13 15:04:07');
 COMMIT;
 
@@ -56,12 +62,18 @@ CREATE TABLE `sys_role`
 --  Records of `sys_role`
 -- ----------------------------
 BEGIN;
-delete from sys_role where id > 0;
+delete
+from sys_role
+where id > 0;
 INSERT INTO `sys_role`
-VALUES ('1', 'super-admin-role-custom_1', '2018-11-12 15:59:43', '2018-11-12 15:59:47', 'super-admin-role-custom_2'),
-       ('2', 'admin-role-custom_1-1', '2018-11-12 16:00:17', '2018-11-12 16:00:19', 'admin-role-custom_1-1'),
-       ('3', 'admin-role-custom_1-2', '2018-11-12 16:00:18', '2018-11-12 16:00:20', 'admin-role-custom_1-2'),
-       ('4', 'admin-role-custom_1-3', '2018-11-12 16:00:19', '2018-11-12 16:00:21', 'admin-role-custom_1-3');
+VALUES ('1', 'super-admin-role-custom_1', '2018-11-12 15:59:43', '2018-11-12 15:59:47',
+        'super-admin-role-custom_2'),
+       ('2', 'admin-role-custom_1-1', '2018-11-12 16:00:17', '2018-11-12 16:00:19',
+        'admin-role-custom_1-1'),
+       ('3', 'admin-role-custom_1-2', '2018-11-12 16:00:18', '2018-11-12 16:00:20',
+        'admin-role-custom_1-2'),
+       ('4', 'admin-role-custom_1-3', '2018-11-12 16:00:19', '2018-11-12 16:00:21',
+        'admin-role-custom_1-3');
 COMMIT;
 
 
@@ -82,7 +94,9 @@ CREATE TABLE `sys_user_role`
 --  Records of `sys_user_role`
 -- ----------------------------
 BEGIN;
-delete from sys_user_role where id > 0;
+delete
+from sys_user_role
+where id > 0;
 INSERT INTO `sys_user_role`
 VALUES ('1', '1', '1'),
        ('2', '2', '2'),

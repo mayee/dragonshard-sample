@@ -26,6 +26,8 @@ Dragonshard's full-featured sample project.
 
 
 ## Change log
+#### v1.0.3 - 2019/11/15
+-  Added upload-local-starter demo.
 #### v1.0.2 - 2019/08/27
 -  Added RSA test case.
 #### v1.0.1 - 2019/08/17

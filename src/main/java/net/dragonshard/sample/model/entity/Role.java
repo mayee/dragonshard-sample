@@ -16,12 +16,11 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.dragonshard.dsf.web.core.framework.model.BaseModel;
-
-import java.time.LocalDateTime;
 
 
 /**
@@ -37,20 +36,20 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 public class Role extends BaseModel {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(notes = "角色名称")
-    private String roleName;
+  @ApiModelProperty(notes = "角色名称")
+  private String roleName;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    @ApiModelProperty(notes = "创建时间")
-    private LocalDateTime createTime;
+  @TableField(value = "create_time", fill = FieldFill.INSERT)
+  @ApiModelProperty(notes = "创建时间")
+  private LocalDateTime createTime;
 
-    @TableField(value = "modified_time", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(notes = "修改时间")
-    private LocalDateTime modifiedTime;
+  @TableField(value = "modified_time", fill = FieldFill.INSERT_UPDATE)
+  @ApiModelProperty(notes = "修改时间")
+  private LocalDateTime modifiedTime;
 
-    @ApiModelProperty(notes = "备注")
-    private String remark;
+  @ApiModelProperty(notes = "备注")
+  private String remark;
 
 }

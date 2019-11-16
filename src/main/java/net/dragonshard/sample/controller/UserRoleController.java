@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author dragonshard
  */
 @Slf4j
-@Api(tags = {"UserRole" }, description = "系统用户角色关系表相关接口")
+@Api(tags = {"UserRole"}, description = "系统用户角色关系表相关接口")
 @RestController
 @ApiVersion(1)
 @RequestMapping(value = "/api/userRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
-public class UserRoleController  {
+public class UserRoleController {
 
 }

@@ -19,13 +19,13 @@ import net.dragonshard.sample.service.IUserRoleService;
 import org.springframework.stereotype.Service;
 
 /**
-// * <p>
- * IUserRoleService 服务实现类
+ * // * <p> IUserRoleService 服务实现类
  * </p>
  *
  * @author dragonshard
  */
 @Service
-public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole>implements IUserRoleService {
+public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements
+  IUserRoleService {
 
 }

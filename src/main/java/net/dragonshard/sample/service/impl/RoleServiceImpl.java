@@ -35,37 +35,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleServiceImpl extends DsfServiceImpl<RoleMapper, Role> implements IRoleService {
 
-    private IUserService userService;
+  private IUserService userService;
 
-    @DsfAssignDataSource("custom")
-    @Override
-    public Role getByIdWithLoadBalance(Long id) {
-        // 每次请求数据会从 custom_1 和 custom_2 中轮流读取。
-        return getBaseMapper().selectById(id);
-    }
+  @DsfAssignDataSource("custom")
+  @Override
+  public Role getByIdWithLoadBalance(Long id) {
+    // 每次请求数据会从 custom_1 和 custom_2 中轮流读取。
+    return getBaseMapper().selectById(id);
+  }
 
-    /**
-     * 用于演示的方法
-     * 完整步骤：
-     * 1-切换到 custom_1，获取role数据；
-     * 2-切换到 custom_2，获取user数据；
-     * 3-最终返回 custom_2 的 user 的 loginName；
-     *
-     * @param id
-     * @return
-     */
-    @DsfAssignDataSource("custom_1")
-    @Override
-    public String getByIdWithNestedSwitch(Long id) {
-        Role roleCustom1 = getBaseMapper().selectById(id);
-        log.info("roleCustom1 > {}", roleCustom1);
+  /**
+   * 用于演示的方法 完整步骤： 1-切换到 custom_1，获取role数据； 2-切换到 custom_2，获取user数据； 3-最终返回 custom_2 的 user 的
+   * loginName；
+   */
+  @DsfAssignDataSource("custom_1")
+  @Override
+  public String getByIdWithNestedSwitch(Long id) {
+    Role roleCustom1 = getBaseMapper().selectById(id);
+    log.info("roleCustom1 > {}", roleCustom1);
 
-        // 从 custom_2 的 user 中读取数据
-        User userCustom2 = userService.getById(id);
+    // 从 custom_2 的 user 中读取数据
+    User userCustom2 = userService.getById(id);
 
-        // 最终返回的是 custom_2 的 user 的 loginName
-        return userCustom2.getLoginName();
-    }
+    // 最终返回的是 custom_2 的 user 的 loginName
+    return userCustom2.getLoginName();
+  }
 
 
 }

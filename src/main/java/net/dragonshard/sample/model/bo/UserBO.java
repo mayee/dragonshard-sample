@@ -14,18 +14,17 @@ package net.dragonshard.sample.model.bo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.dragonshard.dsf.web.core.framework.converter.Convert;
 import net.dragonshard.sample.enums.StatusEnum;
 import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * <p>
@@ -40,41 +39,41 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class UserBO extends Convert {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(notes = "登陆名")
-    @NotBlank(groups = {Create.class, Update.class}, message = "用户名不能为空")
-    @Length(max = 16, groups = {Create.class, Update.class}, message = "长度不能超过16个字符")
-    private String loginName;
+  @ApiModelProperty(notes = "登陆名")
+  @NotBlank(groups = {Create.class, Update.class}, message = "用户名不能为空")
+  @Length(max = 16, groups = {Create.class, Update.class}, message = "长度不能超过16个字符")
+  private String loginName;
 
-    @ApiModelProperty(notes = "昵称")
-    @NotBlank(groups = {Create.class, Update.class}, message = "昵称不能为空")
-    @Length(max = 50, groups = {Create.class, Update.class}, message = "长度不能超过50个字符")
-    private String nickname;
+  @ApiModelProperty(notes = "昵称")
+  @NotBlank(groups = {Create.class, Update.class}, message = "昵称不能为空")
+  @Length(max = 50, groups = {Create.class, Update.class}, message = "长度不能超过50个字符")
+  private String nickname;
 
-    @Email(groups = {Create.class, Update.class}, message = "邮箱格式不正确")
-    @ApiModelProperty(notes = "邮箱")
-    @Length(max = 100, groups = {Create.class, Update.class}, message = "长度不能超过100个字符")
-    private String email;
+  @Email(groups = {Create.class, Update.class}, message = "邮箱格式不正确")
+  @ApiModelProperty(notes = "邮箱")
+  @Length(max = 100, groups = {Create.class, Update.class}, message = "长度不能超过100个字符")
+  private String email;
 
-    @NotNull(groups = Status.class, message = "用户状态不能为空")
-    @ApiModelProperty(notes = "状态:0：禁用 1：正常")
-    private StatusEnum status;
+  @NotNull(groups = Status.class, message = "用户状态不能为空")
+  @ApiModelProperty(notes = "状态:0：禁用 1：正常")
+  private StatusEnum status;
 
-    @ApiModelProperty(notes = "用户角色ID")
-    @NotEmpty(groups = {Create.class, Update.class}, message = "用户角色不能为空")
-    private List<Long> roleIds;
+  @ApiModelProperty(notes = "用户角色ID")
+  @NotEmpty(groups = {Create.class, Update.class}, message = "用户角色不能为空")
+  private List<Long> roleIds;
 
-    public interface Create {
+  public interface Create {
 
-    }
+  }
 
-    public interface Update {
+  public interface Update {
 
-    }
+  }
 
-    public interface Status {
+  public interface Status {
 
-    }
+  }
 
 }

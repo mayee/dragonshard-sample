@@ -25,17 +25,17 @@ import net.dragonshard.sample.model.entity.User;
  */
 public interface IUserService extends IDsfService<User> {
 
-    /**
-     * @param id        用户id
-     * @param status    新状态的枚举值
-     */
-    void updateStatus(Long id, StatusEnum status);
+  /**
+   * @param id 用户id
+   * @param status 新状态的枚举值
+   */
+  void updateStatus(Long id, StatusEnum status);
 
-    /**
-     * 创建用户，设置默认密码，状态设置为不可用
-     *
-     * @param user  用户
-     */
-    void saveUser(User user);
+  /**
+   * 创建用户，设置默认密码，状态设置为不可用
+   *
+   * @param user 用户
+   */
+  void saveUser(User user);
 
 }

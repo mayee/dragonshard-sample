@@ -5,9 +5,12 @@ spring:
   application:
     name: @project.name@
   profiles:
-    active: local
+    active: @activatedYml@
 
 server:
   port: 21001
   servlet:
     context-path: /
+
+logging:
+  path: @project.name@_log

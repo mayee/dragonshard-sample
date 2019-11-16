@@ -18,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import net.dragonshard.dsf.data.mybatis.framework.controller.MyBatisController;
 import net.dragonshard.dsf.data.redis.service.CacheService;
@@ -39,9 +40,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -58,91 +64,95 @@ import java.util.Objects;
 @Validated
 public class UserController extends MyBatisController {
 
-    @Value("${dragonshard.redis.enabled:false}")
-    private String redisIsEnabled;
-    @Autowired
-    private IUserService userService;
+  @Value("${dragonshard.redis.enabled:false}")
+  private String redisIsEnabled;
+  @Autowired
+  private IUserService userService;
 
-    @ApiOperation("查询所有用户")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "loginName", value = "需要检查的账号", paramType = "query"),
-        @ApiImplicitParam(name = "nickname", value = "需要检查的账号", paramType = "query"),
-        @ApiImplicitParam(name = "status", value = "需要检查的账号", paramType = "query")
-    })
-    @GetMapping
-    public ResponseEntity<Result<IPage<UserDTO>>> page(@RequestParam(value = "loginName", required = false) String loginName,
-                                                       @RequestParam(value = "nickname", required = false) String nickname,
-                                                       @RequestParam(value = "status", required = false) StatusEnum status) {
-        return success(
-            userService.lambdaQuery().likeRight(StringUtils.isNotEmpty(loginName), User::getLoginName, loginName)
-                .likeRight(StringUtils.isNotEmpty(nickname), User::getNickname, nickname)
-                .eq(Objects.nonNull(status), User::getStatus, status)
-                .page(this.<User>getPage())
-                .convert(e -> e.convert(UserDTO.class))
-        );
+  @ApiOperation("查询所有用户")
+  @ApiImplicitParams({
+    @ApiImplicitParam(name = "loginName", value = "需要检查的账号", paramType = "query"),
+    @ApiImplicitParam(name = "nickname", value = "需要检查的账号", paramType = "query"),
+    @ApiImplicitParam(name = "status", value = "需要检查的账号", paramType = "query")
+  })
+  @GetMapping
+  public ResponseEntity<Result<IPage<UserDTO>>> page(
+    @RequestParam(value = "loginName", required = false) String loginName,
+    @RequestParam(value = "nickname", required = false) String nickname,
+    @RequestParam(value = "status", required = false) StatusEnum status) {
+    return success(
+      userService.lambdaQuery()
+        .likeRight(StringUtils.isNotEmpty(loginName), User::getLoginName, loginName)
+        .likeRight(StringUtils.isNotEmpty(nickname), User::getNickname, nickname)
+        .eq(Objects.nonNull(status), User::getStatus, status)
+        .page(this.<User>getPage())
+        .convert(e -> e.convert(UserDTO.class))
+    );
+  }
+
+  /**
+   * RESTful优化后的使用方法
+   *
+   * @param id userId
+   * @return userDTO
+   */
+  @ApiOperation("查询单个用户")
+  @ApiImplicitParams({
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+  })
+  @GetMapping(value = "/{id}", name = "pathVariableDemo")
+  public ResponseEntity<Result<UserDTO>> get(@PathVariable("id") Long id) {
+    User user;
+
+    // 从缓存读取
+    if (Boolean.valueOf(redisIsEnabled) && CacheService.hasKey(id.toString())) {
+      user = CacheService.get(id.toString(), new TypeReference<User>() {
+      });
+    } else {
+      user = userService.getById(id);
+      // 放入缓存
+      if (Boolean.valueOf(redisIsEnabled)) {
+        CacheService.save(id.toString(), user, 60);
+      }
     }
 
-    /**
-     * RESTful优化后的使用方法
-     *
-     * @param id userId
-     * @return userDTO
-     */
-    @ApiOperation("查询单个用户")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
-    })
-    @GetMapping(value = "/{id}", name = "pathVariableDemo")
-    public ResponseEntity<Result<UserDTO>> get(@PathVariable("id") Long id) {
-        User user;
+    ApiAssert.notNull(BizErrorCodeEnum.DATA_NOT_FOUND, user);
+    UserDTO userDTO = user.convert(UserDTO.class);
+    return success(userDTO);
+  }
 
-        // 从缓存读取
-        if (Boolean.valueOf(redisIsEnabled) && CacheService.hasKey(id.toString())) {
-            user = CacheService.get(id.toString(), new TypeReference<User>() {
-            });
-        } else {
-            user = userService.getById(id);
-            // 放入缓存
-            if (Boolean.valueOf(redisIsEnabled)) {
-                CacheService.save(id.toString(), user, 60);
-            }
-        }
+  @ApiOperation("设置用户状态")
+  @ApiImplicitParams({
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+  })
+  @PutMapping("/{id}/status")
+  public ResponseEntity updateStatus(@PathVariable("id") Long id,
+    @RequestBody @Validated(UserBO.Status.class) UserBO userBO) {
+    userService.updateStatus(id, userBO.getStatus());
+    return success();
+  }
 
-        ApiAssert.notNull(BizErrorCodeEnum.DATA_NOT_FOUND, user);
-        UserDTO userDTO = user.convert(UserDTO.class);
-        return success(userDTO);
-    }
+  @ApiOperation("创建用户")
+  @SecretBody(value = "rsa", ciphertextType = "hex", providerClass = BouncyCastleProvider.class)
+  @PostMapping
+  public ResponseEntity create(@RequestBody @Validated(UserBO.Create.class) UserBO userBO) {
+    int count = userService.lambdaQuery().eq(User::getLoginName, userBO.getLoginName()).count();
+    ApiAssert.isTrue(BizErrorCodeEnum.USERNAME_ALREADY_EXISTS, count == 0);
+    User user = userBO.convert(User.class);
+    userService.saveUser(user);
+    return success(HttpStatus.CREATED);
+  }
 
-    @ApiOperation("设置用户状态")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
-    })
-    @PutMapping("/{id}/status")
-    public ResponseEntity updateStatus(@PathVariable("id") Long id, @RequestBody @Validated(UserBO.Status.class) UserBO userBO) {
-        userService.updateStatus(id, userBO.getStatus());
-        return success();
-    }
-
-    @ApiOperation("创建用户")
-    @SecretBody(value = "rsa", ciphertextType = "hex", providerClass = BouncyCastleProvider.class)
-    @PostMapping
-    public ResponseEntity create(@RequestBody @Validated(UserBO.Create.class) UserBO userBO) {
-        int count = userService.lambdaQuery().eq(User::getLoginName, userBO.getLoginName()).count();
-        ApiAssert.isTrue(BizErrorCodeEnum.USERNAME_ALREADY_EXISTS, count == 0);
-        User user = userBO.convert(User.class);
-        userService.saveUser(user);
-        return success(HttpStatus.CREATED);
-    }
-
-    @ApiOperation("修改用户")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
-    })
-    @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Validated(UserBO.Update.class) UserBO userBO) {
-        User user = userBO.convert(User.class);
-        user.setId(id);
-        userService.updateById(user);
-        return success();
-    }
+  @ApiOperation("修改用户")
+  @ApiImplicitParams({
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+  })
+  @PutMapping("/{id}")
+  public ResponseEntity update(@PathVariable("id") Long id,
+    @RequestBody @Validated(UserBO.Update.class) UserBO userBO) {
+    User user = userBO.convert(User.class);
+    user.setId(id);
+    userService.updateById(user);
+    return success();
+  }
 }

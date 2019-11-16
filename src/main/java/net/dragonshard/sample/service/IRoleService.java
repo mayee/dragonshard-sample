@@ -24,20 +24,14 @@ import net.dragonshard.sample.model.entity.Role;
  */
 public interface IRoleService extends IDsfService<Role> {
 
-    /**
-     * 基于默认负载均衡模式的数据读取
-     *
-     * @param id
-     * @return
-     */
-    Role getByIdWithLoadBalance(Long id);
+  /**
+   * 基于默认负载均衡模式的数据读取
+   */
+  Role getByIdWithLoadBalance(Long id);
 
-    /**
-     * 嵌套切换数据源
-     *
-     * @param id
-     * @return
-     */
-    String getByIdWithNestedSwitch(Long id);
+  /**
+   * 嵌套切换数据源
+   */
+  String getByIdWithNestedSwitch(Long id);
 
 }

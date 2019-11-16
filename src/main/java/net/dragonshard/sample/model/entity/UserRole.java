@@ -33,12 +33,12 @@ import net.dragonshard.dsf.web.core.framework.model.BaseModel;
 @EqualsAndHashCode(callSuper = false)
 public class UserRole extends BaseModel {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(notes = "用户ID")
-    private Long uid;
+  @ApiModelProperty(notes = "用户ID")
+  private Long uid;
 
-    @ApiModelProperty(notes = "角色ID")
-    private Long roleId;
+  @ApiModelProperty(notes = "角色ID")
+  private Long roleId;
 
 }
