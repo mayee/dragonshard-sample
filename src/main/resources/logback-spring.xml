@@ -124,6 +124,7 @@
 
   <springProfile name="local,dev">
     <logger name="net.dragonshard.dsf.dynamic.datasource" level="DEBUG"/>
+    <!--在logback-spring.xml中加入这行-->
     <logger name="net.dragonshard.dsf.tinypng.framework.service" level="DEBUG"/>
 
     <root level="info">
