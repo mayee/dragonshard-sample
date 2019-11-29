@@ -12,6 +12,8 @@
  */
 package net.dragonshard.sample.controller;
 
+import com.tinify.Source;
+import com.tinify.Tinify;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,12 +22,13 @@ import java.io.IOException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dragonshard.dsf.core.toolkit.ExceptionUtils;
-import net.dragonshard.dsf.upload.local.configuration.common.model.UploadRequest;
-import net.dragonshard.dsf.upload.local.configuration.common.model.UploadResult;
-import net.dragonshard.dsf.upload.local.configuration.common.model.UploadToken;
-import net.dragonshard.dsf.upload.local.configuration.exception.UploadTokenTimeoutException;
-import net.dragonshard.dsf.upload.local.configuration.exception.UploadTokenValidException;
-import net.dragonshard.dsf.upload.local.configuration.framework.service.IUploadLocalService;
+import net.dragonshard.dsf.tinypng.framework.service.ITinypngService;
+import net.dragonshard.dsf.upload.local.common.model.UploadRequest;
+import net.dragonshard.dsf.upload.local.common.model.UploadResult;
+import net.dragonshard.dsf.upload.local.common.model.UploadToken;
+import net.dragonshard.dsf.upload.local.exception.UploadTokenTimeoutException;
+import net.dragonshard.dsf.upload.local.exception.UploadTokenValidException;
+import net.dragonshard.dsf.upload.local.framework.service.IUploadLocalService;
 import net.dragonshard.dsf.web.core.bean.Result;
 import net.dragonshard.dsf.web.core.framework.controller.WebController;
 import net.dragonshard.dsf.web.core.framework.exception.BizException;
@@ -60,10 +63,12 @@ import org.springframework.web.multipart.MultipartFile;
 @ApiVersion(1)
 @RequestMapping(value = "/api/upload/local", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
-@AllArgsConstructor
 public class UploadLocalController extends WebController {
 
+  @Autowired
   protected IUploadLocalService uploadLocalService;
+  @Autowired(required = false)
+  protected ITinypngService tinypngService;
 
   /**
    * 预上传，返回Token
@@ -78,6 +83,9 @@ public class UploadLocalController extends WebController {
 
   /**
    * 上传文件
+   * <p>
+   * 当开启 <code>dragonshard.upload.local.tinypng-async-compress = true</code>
+   * 并且引入 dragonshard-tinypng-starter 时，会对 JPG/PNG 图片自动进行异步压缩，覆盖原文件。
    *
    * @param uploadFile 文件
    * @param uploadBO 上传请求BO对象
@@ -116,4 +124,15 @@ public class UploadLocalController extends WebController {
     headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
     return new ResponseEntity<>(uploadLocalService.files(fileName), headers, HttpStatus.OK);
   }
+
+  /**
+   * 通过 dragonshard-tinypng-starter 实现的图片异步压缩
+   */
+  @GetMapping("/compress")
+  public ResponseEntity<Result<String>> compress() {
+    tinypngService.compressAndSave("upload_local/demo_img.jpeg", "upload_local/demo_img_after.jpeg");
+    return success("Has joined the compression queue!");
+  }
+
+
 }

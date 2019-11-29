@@ -124,6 +124,7 @@
 
   <springProfile name="local,dev">
     <logger name="net.dragonshard.dsf.dynamic.datasource" level="DEBUG"/>
+    <logger name="net.dragonshard.dsf.tinypng.framework.service" level="DEBUG"/>
 
     <root level="info">
       <appender-ref ref="CONSOLE"/>

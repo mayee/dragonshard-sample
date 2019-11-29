@@ -21,7 +21,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.dragonshard.dsf.web.core.framework.converter.Convert;
 import net.dragonshard.sample.enums.StatusEnum;
-import net.dragonshard.sample.enums.UploadEnum;
 import net.dragonshard.sample.model.bo.UserBO.Status;
 import org.hibernate.validator.constraints.Length;
 

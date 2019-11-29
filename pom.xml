@@ -12,7 +12,7 @@
 
   <groupId>net.dragonshard</groupId>
   <artifactId>dragonshard-sample</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <packaging>jar</packaging>
 
   <name>dragonshard-sample</name>
@@ -50,7 +50,7 @@
   </profiles>
 
   <properties>
-    <dragonshard.version>1.2.0</dragonshard.version>
+    <dragonshard.version>1.2.1-SNAPSHOT</dragonshard.version>
 
     <!-- Test -->
     <testng.version>6.14.3</testng.version>
@@ -95,6 +95,11 @@
     <dependency>
       <groupId>net.dragonshard</groupId>
       <artifactId>dragonshard-upload-local-starter</artifactId>
+      <version>${dragonshard.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.dragonshard</groupId>
+      <artifactId>dragonshard-tinypng-starter</artifactId>
       <version>${dragonshard.version}</version>
     </dependency>
 

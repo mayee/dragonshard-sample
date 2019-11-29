@@ -110,13 +110,31 @@ dragonshard:
   upload:
     local:
       enabled: true
+      url-prefix: http://localhost:21001/v1/api/upload/local/media/
+      compress:
+        # 异步压缩（默认false），如果此功能开启，并且 type = tinypng，则系统会验证是否引入了 dragonshard-tinypng-starter 依赖并启用
+        enabled: true
+        # 当前仅支持 tinypng 压缩方式
+        type: tinypng
       signature:
+        # 签名校验（默认false）
         enabled: false
+        # 签名用的密钥
         secret-key: bdb98f3eaeb7b966804b
+        # 签名有效期
         timeout-second: 1800
       file:
+        # 存储路径
         dir: upload_local
-      url-prefix: http://localhost:21001/v1/api/upload/local/media/
+
+  tinypng:
+    enabled: true
+    # 申请地址 https://tinypng.com/developers
+    api-key: cvJ4833Pgy8QCXPq9vcZSq81Kqs6xVtT
+    # 严格模式（默认false），开启后会在启动时验证api-key的有效性
+    strict: true
+    # 代理
+    proxy:
 
 
 

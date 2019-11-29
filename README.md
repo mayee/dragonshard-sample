@@ -1,6 +1,6 @@
 
 
-<img src="https://github.com/mayee/img-folder/blob/master/ds-logo_96.png" height="48px" alt="logo">
+<img src="https://images.gitee.com/uploads/images/2019/1116/133852_517f67f6_445103.png" height="48px" alt="logo">
 
 
 
@@ -26,6 +26,9 @@ Dragonshard's full-featured sample project.
 
 
 ## Change log
+#### v1.0.4 - 2019/11/28
+-  Added tinypng-starter demo.
+-  Added image async compression demo.
 #### v1.0.3 - 2019/11/15
 -  Added upload-local-starter demo.
 #### v1.0.2 - 2019/08/27
@@ -34,6 +37,9 @@ Dragonshard's full-featured sample project.
 -  Added id-generator-starter test case.
 -  Added javascript rsa encryption example and source code
 
+
+## Contact us
+feedback@dragonshard.net
 
 
 ## License
